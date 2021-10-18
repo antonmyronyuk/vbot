@@ -14,6 +14,7 @@ def create_app() -> web.Application:
     app.on_startup.append(signals.start_ping)
     app.router.add_route('GET', '/', views.health)
     app.router.add_route('GET', '/health', views.health)
+    app.router.add_route('GET', '/info', views.info)
     return app
 
 

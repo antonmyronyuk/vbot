@@ -8,7 +8,7 @@ log = logging.getLogger(__name__)
 
 
 async def _ping_with_interval() -> None:
-    await asyncio.sleep(5)
+    await asyncio.sleep(60 * 20)
     async with aiohttp.ClientSession() as session:
         resp = await session.get(
             url='https://vbot-early.herokuapp.com/?ping=1',
