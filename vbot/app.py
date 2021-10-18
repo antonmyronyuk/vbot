@@ -1,3 +1,5 @@
+import os
+
 from aiohttp import web
 
 
@@ -14,4 +16,5 @@ def create_app() -> web.Application:
 
 def main() -> None:
     app = create_app()
-    web.run_app(app)
+    port = os.environ.get('PORT', 8080)
+    web.run_app(app, port=port)
