@@ -2,7 +2,7 @@ from aiohttp import web
 
 
 async def health(request: web.Request) -> web.Response:
-    return web.Response(text='Ok')
+    return web.Response(text='Everything ok!')
 
 
 def create_app() -> web.Application:
