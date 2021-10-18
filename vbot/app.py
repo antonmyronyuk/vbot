@@ -1,16 +1,19 @@
+import logging
 import os
 
 from aiohttp import web
 
+from vbot import signals
+from vbot import views
 
-async def health(request: web.Request) -> web.Response:
-    return web.Response(text='Everything ok!')
+logging.basicConfig(level=logging.INFO)
 
 
 def create_app() -> web.Application:
     app = web.Application()
-    app.router.add_route('GET', '/', health)
-    app.router.add_route('GET', '/health', health)
+    app.on_startup.append(signals.start_ping)
+    app.router.add_route('GET', '/', views.health)
+    app.router.add_route('GET', '/health', views.health)
     return app
 
 
