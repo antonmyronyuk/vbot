@@ -12,3 +12,7 @@ async def health(request: web.Request) -> web.Response:
 async def info(request: web.Request) -> web.Response:
     uptime = datetime.now() - start_datetime
     return web.Response(text=f'Server is up for {uptime} sec')
+
+
+async def viber_hook(request: web.Request) -> web.Response:
+    return web.json_response({'ok': True})
