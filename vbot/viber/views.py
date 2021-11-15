@@ -18,7 +18,7 @@ viber = Api(BotConfiguration(
 
 
 async def webhook(request: web.Request) -> web.Response:
-    request_data = await request.json()
+    request_data = await request.read()
     log.info('Viber request data: %s', request_data)
 
     signature = request.headers.get('X-Viber-Content-Signature')
