@@ -5,6 +5,7 @@ from aiohttp import web
 from viberbot import Api
 from viberbot import BotConfiguration
 from viberbot.api.messages import TextMessage
+from viberbot.api.viber_requests import ViberConversationStartedRequest
 from viberbot.api.viber_requests import ViberMessageRequest
 from viberbot.api.viber_requests import ViberSubscribedRequest
 
@@ -36,6 +37,10 @@ async def webhook(request: web.Request) -> web.Response:
     elif isinstance(viber_request, ViberSubscribedRequest):
         viber.send_messages(viber_request.user.id, [
             TextMessage(text='Thanks for subscribing!'),
+        ])
+    elif isinstance(viber_request, ViberConversationStartedRequest):
+        viber.send_messages(viber_request.user.id, [
+            TextMessage(text='Thanks for starting conversation!'),
         ])
 
     return web.json_response({'ok': True})
