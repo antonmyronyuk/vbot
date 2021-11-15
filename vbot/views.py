@@ -18,6 +18,6 @@ async def info(request: web.Request) -> web.Response:
 
 
 async def viber_hook(request: web.Request) -> web.Response:
-    post_data = await request.post()
-    log.info('Request data: %s', post_data)
+    request_data = await request.json()
+    log.info('Request data: %s', request_data)
     return web.json_response({'ok': True})
