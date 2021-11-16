@@ -37,24 +37,23 @@ async def webhook(request: web.Request) -> web.Response:
     if isinstance(viber_request, ViberMessageRequest):
         await loop.run_in_executor(
             executor,
-            viber.send_messages(viber_request.sender.id, [
-                TextMessage(text='Echo:'),
-                viber_request.message,
-            ]),
+            viber.send_messages,
+            viber_request.sender.id,
+            [TextMessage(text='Echo:'), viber_request.message],
         )
     elif isinstance(viber_request, ViberSubscribedRequest):
         await loop.run_in_executor(
             executor,
-            viber.send_messages(viber_request.user.id, [
-                TextMessage(text='Thanks for subscribing!'),
-            ]),
+            viber.send_messages,
+            viber_request.user.id,
+            [TextMessage(text='Thanks for subscribing!')],
         )
     elif isinstance(viber_request, ViberConversationStartedRequest):
         await loop.run_in_executor(
             executor,
-            viber.send_messages(viber_request.user.id, [
-                TextMessage(text='Thanks for starting conversation!'),
-            ]),
+            viber.send_messages,
+            viber_request.user.id,
+            [TextMessage(text='Thanks for starting conversation!')],
         )
 
     return web.json_response({'ok': True})
