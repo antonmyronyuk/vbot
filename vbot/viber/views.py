@@ -1,5 +1,7 @@
+import asyncio
 import logging
 import os
+from concurrent.futures import ThreadPoolExecutor
 
 from aiohttp import web
 from viberbot import Api
@@ -10,6 +12,8 @@ from viberbot.api.viber_requests import ViberMessageRequest
 from viberbot.api.viber_requests import ViberSubscribedRequest
 
 log = logging.getLogger(__name__)
+
+executor = ThreadPoolExecutor(max_workers=1)
 
 viber = Api(BotConfiguration(
     name='PhishCheckerTrunk',
@@ -28,19 +32,29 @@ async def webhook(request: web.Request) -> web.Response:
         raise web.HTTPForbidden
 
     viber_request = viber.parse_request(request_data)
+    loop = asyncio.get_running_loop()
 
     if isinstance(viber_request, ViberMessageRequest):
-        viber.send_messages(viber_request.sender.id, [
-            TextMessage(text='Echo:'),
-            viber_request.message,
-        ])
+        await loop.run_in_executor(
+            executor,
+            viber.send_messages(viber_request.sender.id, [
+                TextMessage(text='Echo:'),
+                viber_request.message,
+            ]),
+        )
     elif isinstance(viber_request, ViberSubscribedRequest):
-        viber.send_messages(viber_request.user.id, [
-            TextMessage(text='Thanks for subscribing!'),
-        ])
+        await loop.run_in_executor(
+            executor,
+            viber.send_messages(viber_request.user.id, [
+                TextMessage(text='Thanks for subscribing!'),
+            ]),
+        )
     elif isinstance(viber_request, ViberConversationStartedRequest):
-        viber.send_messages(viber_request.user.id, [
-            TextMessage(text='Thanks for starting conversation!'),
-        ])
+        await loop.run_in_executor(
+            executor,
+            viber.send_messages(viber_request.user.id, [
+                TextMessage(text='Thanks for starting conversation!'),
+            ]),
+        )
 
     return web.json_response({'ok': True})
