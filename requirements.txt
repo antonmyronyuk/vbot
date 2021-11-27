@@ -1,2 +1,2 @@
 aiohttp==3.7.4
-viberbot==1.0.11
+aioviberbot==0.1.1
