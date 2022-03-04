@@ -5,7 +5,8 @@ from aiohttp import web
 
 from vbot import signals
 from vbot import views
-from vbot.viber import views as viber_views
+from vbot.bots import telegram
+from vbot.bots import viber
 
 logging.basicConfig(level=logging.INFO)
 
@@ -16,7 +17,8 @@ def create_app() -> web.Application:
     app.router.add_route('GET', '/', views.health)
     app.router.add_route('GET', '/health', views.health)
     app.router.add_route('GET', '/info', views.info)
-    app.router.add_route('POST', '/bots/viber', viber_views.webhook),
+    app.router.add_route('POST', '/bots/telegram', telegram.WebhookView),
+    app.router.add_route('POST', '/bots/viber', viber.webhook),
     return app
 
 
