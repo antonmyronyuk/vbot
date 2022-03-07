@@ -5,6 +5,7 @@ from aiogram import Bot
 from aiogram import Dispatcher
 from aiogram import types
 from aiogram.dispatcher.webhook import WebhookRequestHandler
+from aiohttp import web
 
 from vbot.lib.opendatabot import opendatabot
 from vbot.lib.opendatabot.exceptions import OpendatabotBaseError
@@ -14,6 +15,12 @@ log = logging.getLogger(__name__)
 
 bot = Bot(token=os.getenv('TELEGRAM_BOT_TOKEN'))
 dp = Dispatcher(bot=bot)
+
+
+async def close_bot_session(app: web.Application) -> None:
+    if bot._session is not None:
+        await bot._session.close()
+        log.info('Closed telegram bot client session')
 
 
 async def get_transport_check_answer_text(number: str) -> str:

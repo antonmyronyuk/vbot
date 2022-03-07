@@ -58,3 +58,5 @@ config/ipython/**
 !config/ipython/profile_sync/ipython_config.py
 !config/ipython/profile_async/startup/*
 !config/ipython/profile_async/ipython_config.py
+
+run.sh
