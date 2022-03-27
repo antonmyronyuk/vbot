@@ -1,2 +1,2 @@
-# Vbot
-aioviberbot + aiohttp + heroku
+# Vbot (handy bots backend stubs)
+aiohttp + aioviberbot + aiogram

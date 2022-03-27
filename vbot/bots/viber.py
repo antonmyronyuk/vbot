@@ -12,8 +12,11 @@ from aioviberbot.api.viber_requests import ViberSubscribedRequest
 log = logging.getLogger(__name__)
 
 viber = Api(BotConfiguration(
-    name='PhishCheckerTrunk',
-    avatar='https://avatars.izi.ua/2_1617960260',
+    name='EchoBot',
+    avatar=(
+        'https://dl-media.viber.com/5/share/2/long/vibes/icon/image/0x0/9120/'
+        '640b2673e5a5bc70a874d30ffeb02929519fe588758e399385a39cfdce2f9120.jpg'
+    ),
     auth_token=os.getenv('VIBER_BOT_AUTH_TOKEN'),
 ))
 
@@ -29,20 +32,21 @@ async def webhook(request: web.Request) -> web.Response:
 
     viber_request = viber.parse_request(request_data)
 
-    if isinstance(viber_request, ViberMessageRequest):
-        await viber.send_messages(
-            viber_request.sender.id,
-            [TextMessage(text='Echo:'), viber_request.message],
-        )
-    elif isinstance(viber_request, ViberSubscribedRequest):
-        await viber.send_messages(
-            viber_request.user.id,
-            [TextMessage(text='Thanks for subscribing!')],
-        )
-    elif isinstance(viber_request, ViberConversationStartedRequest):
-        await viber.send_messages(
-            viber_request.user.id,
-            [TextMessage(text='Thanks for starting conversation!')],
-        )
+    match viber_request:
+        case ViberMessageRequest():
+            await viber.send_messages(
+                viber_request.sender.id,
+                [TextMessage(text='Echo:'), viber_request.message],
+            )
+        case ViberSubscribedRequest():
+            await viber.send_messages(
+                viber_request.user.id,
+                [TextMessage(text='Thanks for subscribing!')],
+            )
+        case ViberConversationStartedRequest():
+            await viber.send_messages(
+                viber_request.user.id,
+                [TextMessage(text='Thanks for starting conversation!')],
+            )
 
     return web.json_response({'ok': True})
