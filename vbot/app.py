@@ -27,5 +27,5 @@ def create_app() -> web.Application:
 
 def main() -> None:
     app = create_app()
-    port = os.environ.get('PORT', 8080)
+    port = int(os.environ.get('PORT', 8080))
     web.run_app(app, port=port)

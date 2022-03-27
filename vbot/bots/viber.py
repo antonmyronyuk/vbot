@@ -33,17 +33,17 @@ async def webhook(request: web.Request) -> web.Response:
     viber_request = viber.parse_request(request_data)
 
     match viber_request:
-        case ViberMessageRequest():
+        case ViberMessageRequest():  # type: ignore
             await viber.send_messages(
                 viber_request.sender.id,
                 [TextMessage(text='Echo:'), viber_request.message],
             )
-        case ViberSubscribedRequest():
+        case ViberSubscribedRequest():  # type: ignore
             await viber.send_messages(
                 viber_request.user.id,
                 [TextMessage(text='Thanks for subscribing!')],
             )
-        case ViberConversationStartedRequest():
+        case ViberConversationStartedRequest():  # type: ignore
             await viber.send_messages(
                 viber_request.user.id,
                 [TextMessage(text='Thanks for starting conversation!')],

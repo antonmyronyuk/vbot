@@ -1,4 +1,4 @@
-name: lint
+name: Lint
 on: [push]
 
 jobs:
@@ -23,5 +23,8 @@ jobs:
           python -m pip install --upgrade pip setuptools
           pip install -r requirements-dev.txt
 
-      - name: Lint
-        run: flake8
+      - name: Flake8
+        run: flake8 vbot
+
+      - name: Mypy
+        run: mypy vbot
