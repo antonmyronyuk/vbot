@@ -6,7 +6,7 @@ start_datetime = datetime.now()
 
 
 async def health(request: web.Request) -> web.Response:
-    return web.Response(text='Everything ok!')
+    return web.Response(text='Everything ok!!!')
 
 
 async def info(request: web.Request) -> web.Response:
