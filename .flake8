@@ -1,0 +1,10 @@
+[flake8]
+exclude =
+    .git,
+    .venv,
+    __pycache__
+max-complexity = 10
+max-line-length = 80
+multiline-quotes = '''
+application-import-names = vbot
+import-order-style = smarkets
