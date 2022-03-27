@@ -14,8 +14,8 @@ def setup_routing(app: web.Application) -> None:
     app.router.add_route('GET', '/', views.health)
     app.router.add_route('GET', '/health', views.health)
     app.router.add_route('GET', '/info', views.info)
-    app.router.add_route('POST', '/bots/telegram', telegram.WebhookView),
-    app.router.add_route('POST', '/bots/viber', viber.webhook),
+    app.router.add_route('POST', '/bots/telegram', telegram.WebhookView)
+    app.router.add_route('POST', '/bots/viber', viber.webhook)
 
 
 def create_app() -> web.Application:
