@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Build source
         uses: akhileshns/heroku-deploy@v3.12.12
